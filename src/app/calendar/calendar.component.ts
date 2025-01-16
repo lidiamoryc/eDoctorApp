@@ -5,6 +5,8 @@ import { AppointmentDialogComponent } from '../appointment-dialog/appointment-di
 import { BasketComponent } from '../basket/basket.component'
 import { AppointmentService, Appointment, Absence } from '../appointment.service'; 
 import { AbsenceComponent } from '../absence/absence.component';
+import { take } from 'rxjs/operators';
+import { AuthService } from '../services/auth.service';
 
 
 export enum CalendarView {
@@ -33,7 +35,7 @@ export class CalendarComponent implements OnInit {
 
   public CalendarView = CalendarView;
 
-  constructor(public dialog: MatDialog, private appointmentService: AppointmentService) {
+  constructor(public dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
     this.appointments.forEach((appointment) => {
       appointment.color = this.getRandomColor();
     });
@@ -369,38 +371,36 @@ export class CalendarComponent implements OnInit {
 
 
   addAbsence(): void {
-    const dialogRef = this.dialog.open(AbsenceComponent, {
-      width: '500px',
-      panelClass: 'dialog-container',
-    });
-  
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Absence data:', result); // Log the absence data
-        const formattedAbsence = {
-          date: result.date, // Use the selected date from the form
-          name_and_surname: result.name_and_surname,
-          type: result.type,
-          age: result.age,
-          gender: result.gender,
-          startTime: result.startTime, // Use the start time from the form
-          endTime: result.endTime, // Use the end time from the form
-          additional_info: result.additional_info,
-        };
-  
-        // Send the absence to the backend
-        this.appointmentService.addAbsence(formattedAbsence).subscribe({
-          next: (response) => {
-            console.log('Absence added successfully:', response);
-  
-            // Refresh the absences list
-            this.fetchAbsences(); // Re-fetch absences from the backend
-          },
-          error: (err) => {
-            console.error('Error adding absence:', err);
-          },
-        });
+    this.authService.isDoctor().pipe(take(1)).subscribe(isDoctor => {
+      if (!isDoctor) {
+        console.error('Unauthorized: Only doctors can add absences');
+        return;
       }
+
+      const dialogRef = this.dialog.open(AbsenceComponent, {
+        width: '500px',
+        panelClass: 'dialog-container',
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          const formattedAbsence = {
+            date: result.date,
+            startTime: result.startTime,
+            endTime: result.endTime,
+          };
+
+          this.appointmentService.addAbsence(formattedAbsence).subscribe({
+            next: (response) => {
+              console.log('Absence added successfully:', response);
+              this.fetchAbsences();
+            },
+            error: (err) => {
+              console.error('Error adding absence:', err);
+            },
+          });
+        }
+      });
     });
   }
 
