@@ -1,9 +1,9 @@
-const Product = require('../models/product.model');
+const Appointment = require('../models/appointments.model');
 
 
-const getProducts = async (req, res) => {
+const getAppointments = async (req, res) => {
     try {
-        const products = await Product.find({});
+        const products = await Appointment.find({});
         res.status(200).json(products);
 
     } catch (error) {
@@ -12,10 +12,10 @@ const getProducts = async (req, res) => {
 };
 
 
-const getProduct = async (req, res) => {
+const getAppointment = async (req, res) => {
     try {
         const {id} = req.params;
-        const product = await Product.findById(id);
+        const product = await Appointment.findById(id);
         res.status(200).json(product);
 
     } catch (error) {
@@ -25,10 +25,10 @@ const getProduct = async (req, res) => {
 
 
 
-const postProduct = async (req, res) => {
+const postAppointment = async (req, res) => {
 
     try {
-        const product = await Product.create(req.body);
+        const product = await Appointment.create(req.body);
 
         res.status(200).json(product);
 
@@ -38,17 +38,17 @@ const postProduct = async (req, res) => {
 };
 
 
-const putProduct = async (req, res) => {
+const putAppointment = async (req, res) => {
 
     try {
         const {id} = req.params;
-        const product = await Product.findByIdAndUpdate(id, req.body);
+        const product = await Appointment.findByIdAndUpdate(id, req.body);
 
         if (!product) {
             return res.status(404).json({message: "product not found"})
         }
 
-        const updatedProduct = await Product.findById(id);
+        const updatedProduct = await Appointment.findById(id);
         res.status(200).json(updatedProduct);
 
     } catch (error) {
@@ -57,11 +57,11 @@ const putProduct = async (req, res) => {
 };
 
 
-const deleteProduct = async (req, res) => {
+const deleteAppointment = async (req, res) => {
 
     try {
         const {id} = req.params;
-        const product = await Product.findByIdAndDelete(id);
+        const product = await Appointment.findByIdAndDelete(id);
 
         if (!product) {
             return res.status(404).json({message: "product not found"})
@@ -76,9 +76,9 @@ const deleteProduct = async (req, res) => {
 
 
 module.exports = {
-    getProducts,
-    getProduct,
-    postProduct,
-    putProduct,
-    deleteProduct
+    getAppointments,
+    getAppointment,
+    postAppointment,
+    putAppointment,
+    deleteAppointment,
 };

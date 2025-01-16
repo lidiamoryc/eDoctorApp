@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const ProductSchema = mongoose.Schema(
+const AppointmentSchema = mongoose.Schema(
     {
         date: {
             type: String,
@@ -47,6 +47,6 @@ const ProductSchema = mongoose.Schema(
     }
 );
 
-const Product = mongoose.model("Product", ProductSchema);
+const Appointment = mongoose.model("Appointment", AppointmentSchema);
 
-module.exports = Product;
+module.exports = Appointment;
