@@ -10,6 +10,17 @@
       "startTime": "09:00",
       "endTime": "11:00",
       "additional_info": ""
+    },
+    {
+      "name_and_surname": "Jan Kowalksi",
+      "type": "control visit",
+      "gender": "male",
+      "age": 21,
+      "date": "2025-01-16",
+      "startTime": "11:00",
+      "endTime": "13:00",
+      "id": "7d6a",
+      "additional_info": "test"
     }
   ],
   "absence": [
@@ -48,6 +59,12 @@
       "date": "2025-01-17",
       "startTime": "11:00",
       "endTime": "14:00"
+    },
+    {
+      "id": "87b1",
+      "date": "2025-01-17",
+      "startTime": "10:30",
+      "endTime": "12:30"
     }
   ]
 }
