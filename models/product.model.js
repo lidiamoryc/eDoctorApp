@@ -4,12 +4,27 @@ const ProductSchema = mongoose.Schema(
     {
         date: {
             type: String,
-            required: [true, "please enter product name"],
+            required: true,
         },
 
-        title: {
+        name_and_surname: {
             type: String,
             required: true,
+        },
+
+        type: {
+            type: String,
+            required: true,
+        },
+
+        age: {
+            type: Number,
+            required: true,
+        },
+
+        gender: {
+            type: String,
+            required: false,
         },
 
         startTime: {
@@ -22,6 +37,11 @@ const ProductSchema = mongoose.Schema(
             type: String,
             required: true,
             default: 0
+        },
+
+        additional_info: {
+            type: String,
+            required: false,
         }
 
     }

@@ -19,6 +19,10 @@ app.get('/', (req, res) => {
   res.send('Hello from node api server');
 });
 
+  
+
+
+
 
 
 
@@ -45,60 +49,60 @@ app.get('/', (req, res) => {
 // });
 
 
-app.post('/api/products', async (req, res) => {
-    // console.log(req.body);
-    // res.send(req.body);
+// app.post('/api/products', async (req, res) => {
+//     // console.log(req.body);
+//     // res.send(req.body);
 
-    try {
-        const product = await Product.create(req.body);
+//     try {
+//         const product = await Product.create(req.body);
 
-        // productData.date = moment(productData.date).utc().format('YYYY-MM-DD');
+//         // productData.date = moment(productData.date).utc().format('YYYY-MM-DD');
 
-        res.status(200).json(product);
+//         res.status(200).json(product);
 
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-});
+//     } catch (error) {
+//         res.status(500).json({message: error.message});
+//     }
+// });
 
 
 // update
-app.put('/api/products/:id', async (req, res) => {
+// app.put('/api/products/:id', async (req, res) => {
 
-    try {
-        const {id} = req.params;
-        const product = await Product.findByIdAndUpdate(id, req.body);
+//     try {
+//         const {id} = req.params;
+//         const product = await Product.findByIdAndUpdate(id, req.body);
 
-        if (!product) {
-            return res.status(404).json({message: "product not found"})
-        }
+//         if (!product) {
+//             return res.status(404).json({message: "product not found"})
+//         }
 
-        const updatedProduct = await Product.findById(id);
-        res.status(200).json(updatedProduct);
+//         const updatedProduct = await Product.findById(id);
+//         res.status(200).json(updatedProduct);
 
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-});
+//     } catch (error) {
+//         res.status(500).json({message: error.message});
+//     }
+// });
 
 
-//delete 
-app.delete('/api/products/:id', async (req, res) => {
+// //delete 
+// app.delete('/api/products/:id', async (req, res) => {
 
-    try {
-        const {id} = req.params;
-        const product = await Product.findByIdAndDelete(id);
+//     try {
+//         const {id} = req.params;
+//         const product = await Product.findByIdAndDelete(id);
 
-        if (!product) {
-            return res.status(404).json({message: "product not found"})
-        }
+//         if (!product) {
+//             return res.status(404).json({message: "product not found"})
+//         }
 
-        res.status(200).json("product deleted successfully");
+//         res.status(200).json("product deleted successfully");
 
-    } catch (error) {
-        res.status(500).json({message: error.message});
-    }
-});
+//     } catch (error) {
+//         res.status(500).json({message: error.message});
+//     }
+// });
 
 
 
