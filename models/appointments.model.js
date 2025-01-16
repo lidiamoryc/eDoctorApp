@@ -42,7 +42,13 @@ const AppointmentSchema = mongoose.Schema(
         additional_info: {
             type: String,
             required: false,
+        },
+
+        color: {
+            type: String,
+            required: false,
         }
+
 
     }
 );
