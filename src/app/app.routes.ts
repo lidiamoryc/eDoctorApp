@@ -1,11 +1,18 @@
 import { Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 
 export const routes: Routes = [
+  // Lazy load the Calendar Module
   {
     path: 'calendar',
     loadChildren: () =>
       import('./calendar/calendar.module').then((m) => m.CalendarModule),
   },
-  { path: '', redirectTo: '/calendar', pathMatch: 'full' },
+  // Lazy load the Auth Module
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  // Default route redirects to the login page
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
 ];

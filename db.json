@@ -12,6 +12,7 @@
       "additional_info": ""
     }
   ],
+
   "absence": [
     {
       "id": "2b9a",
@@ -48,6 +49,39 @@
       "date": "2025-01-17",
       "startTime": "11:00",
       "endTime": "14:00"
+    }
+  ],
+
+  "users": [
+    {
+      "id": "1",
+      "username": "admin",
+      "password": "admin",
+      "role": "admin"
+    },
+    {
+      "id": "2",
+      "username": "user1",
+      "password": "userpassword",
+      "role": "user"
+    },
+    {
+      "id": "69d3",
+      "username": "Lidia",
+      "password": "123",
+      "role": "user"
+    },
+    {
+      "id": "4aa1",
+      "username": "Lidia",
+      "password": "1",
+      "role": "user"
+    },
+    {
+      "id": "768a",
+      "username": "Lidiaa",
+      "password": "1",
+      "role": "patient"
     }
   ]
 }
