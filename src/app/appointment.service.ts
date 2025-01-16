@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-import { environment } from '../environments/environment';
-// import { AngularFireDatabase } from '@angular/fire/compat/database';
-
+import { Observable } from 'rxjs';
+import { FirebaseService } from './services/firebase.service';
 
 export interface Appointment {
   id?: string;
@@ -29,62 +26,29 @@ export interface Absence {
   providedIn: 'root'
 })
 export class AppointmentService {
+  constructor(private firebaseService: FirebaseService) {}
 
-
-  private apiUrl = environment.apiUrl;
-  private absenceApiUrl =  environment.absenceApiUrl;
-
-  constructor(private http: HttpClient,
-              // private db: AngularFireDatabase
-              ) { }
-
-  // Fetch appointments from db.json
   getAppointments(): Observable<Appointment[]> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      map((appointments) =>
-        appointments.map((appointment) => ({
-          ...appointment,
-          id: appointment._id || appointment.id, // Map _id to id if it exists
-        }))
-      )
-    );
+    return this.firebaseService.getAppointments();
   }
 
- // Add a new appointment
- addAppointment(appointment: Appointment): Observable<Appointment> {
-  return this.http.post<Appointment>(this.apiUrl, appointment);
-}
-
-  // Update an existing appointment
-  updateAppointment(appointment: Appointment): Observable<Appointment> {
-    if (!appointment.id) {
-      throw new Error('Appointment must have a id to update');
-    }
-    const url = `${this.apiUrl}/${appointment.id}`;
-    return this.http.put<Appointment>(url, appointment);
+  addAppointment(appointment: Appointment): Observable<any> {
+    return this.firebaseService.addAppointment(appointment);
   }
 
-  // Delete an appointment by ID
-  deleteAppointment(id: string): Observable<void> {
-    const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+  updateAppointment(appointment: Appointment): Observable<any> {
+    return this.firebaseService.updateAppointment(appointment);
   }
 
-  // Method to add a new absence
-  addAbsence(absence: Absence): Observable<Absence> {
-    return this.http.post<Absence>(this.absenceApiUrl, absence);
+  deleteAppointment(id: string): Observable<any> {
+    return this.firebaseService.deleteAppointment(id);
   }
 
-  // Method to fetch absences (if needed for other operations)
   getAbsences(): Observable<Absence[]> {
-    return this.http.get<any[]>(this.absenceApiUrl).pipe(
-      map((absences) =>
-        absences.map((absence) => ({
-          ...absence,
-          id: absence._id || absence.id, // Map _id to id if it exists
-        }))
-      )
-    );
+    return this.firebaseService.getAbsences();
   }
-  
+
+  addAbsence(absence: Absence): Observable<any> {
+    return this.firebaseService.addAbsence(absence);
   }
+}

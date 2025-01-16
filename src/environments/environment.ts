@@ -5,6 +5,7 @@ export const environment = {
     firebaseConfig: {
     apiKey: "AIzaSyAe7yDuX-g0CgloQWfCbiPfm0A4A-quJxk",
     authDomain: "edoctorapp-f0008.firebaseapp.com",
+    databaseURL: "https://edoctorapp-f0008-default-rtdb.europe-west-1.firebasedatabase.app",
     projectId: "edoctorapp-f0008",
     storageBucket: "edoctorapp-f0008.appspot.com",
     messagingSenderId: "989131274547",

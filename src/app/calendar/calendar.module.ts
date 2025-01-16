@@ -17,21 +17,11 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
-
-// firebase
-import { AngularFireModule } from "@angular/fire/compat";
-import { environment } from '../../environments/environment';
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
-
 const routes: Routes = [{ path: '', component: CalendarComponent }];
 
 @NgModule({
   declarations: [CalendarComponent, BasketComponent, ],
   imports: [
-    AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AppComponent,
     CommonModule,
     MatButtonModule,
     MatButtonToggleGroup,
@@ -41,8 +31,8 @@ const routes: Routes = [{ path: '', component: CalendarComponent }];
     AppointmentDialogComponent,
     RouterModule.forChild(routes),
     AbsenceComponent,
-    MatOptionModule, // Import MatOptionModule
-    MatSelectModule, // Import MatSelectModule
+    MatOptionModule,
+    MatSelectModule,
     MatTooltipModule
     ],
 })
