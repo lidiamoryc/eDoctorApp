@@ -229,3 +229,28 @@
   pointer-events: none;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  button {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+.presence-slot {
+  background-color: #d4f7d4b8; /* Light green to indicate presence */
+}
+
+.today-column {
+  background-color: #e3f2fd;; /* Light yellow background */
+}

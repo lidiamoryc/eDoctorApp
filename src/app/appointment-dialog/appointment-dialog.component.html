@@ -78,6 +78,12 @@
         The selected time overlaps with an absence. Please choose a different time.
       </div>
 
+      
+      <!-- Event overlapping error -->
+      <div *ngIf="appointmentForm.errors?.['overlappingEvent']" class="error-message">
+        The selected time slot overlaps with an existing event. Please choose a different time.
+      </div>
+
       <!-- Additional Info -->
       <mat-form-field class="form-field">
         <mat-label>Additional Information</mat-label>

@@ -16,6 +16,7 @@ import { AppComponent } from '../app.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {PresenceComponent} from '../presence/presence.component'
 
 
 
@@ -43,7 +44,8 @@ const routes: Routes = [{ path: '', component: CalendarComponent }];
     AbsenceComponent,
     MatOptionModule, // Import MatOptionModule
     MatSelectModule, // Import MatSelectModule
-    MatTooltipModule
+    MatTooltipModule,
+    PresenceComponent
     ],
 })
 export class CalendarModule {}

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { NgPlural } from '@angular/common';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 export interface User {
   id: number;
@@ -15,6 +14,7 @@ export interface User {
 })
 export class AuthService {
   private apiUrl = 'http://localhost:3000/users'; // Adjust the URL as needed
+  private currentUserSubject = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +26,9 @@ export class AuthService {
           const user = users.find(
             (u) => u.username === username && u.password === password
           );
+          if (user) {
+            this.currentUserSubject.next(user); // Set logged-in user
+          }
           observer.next(user || null); // Return user if found, otherwise null
           observer.complete();
         },
@@ -49,5 +52,14 @@ export class AuthService {
 
   createUser(user: Partial<User>): Observable<User> {
     return this.http.post<User>(this.apiUrl, user); // Add user to db.json
+  }
+
+
+  logout(): void {
+    this.currentUserSubject.next(null); // Clear logged-in user
+  }
+
+  getCurrentUser(): Observable<User | null> {
+    return this.currentUserSubject.asObservable();
   }
 }

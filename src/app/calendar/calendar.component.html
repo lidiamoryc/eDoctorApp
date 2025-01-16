@@ -1,3 +1,12 @@
+<!-- <div class="header">
+  <div *ngIf="currentUser">
+    <span>Welcome, {{ currentUser.username }}!</span>
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
+
+ -->
+
 <div class="container" cdkDropListGroup>
   <div class="calendar-container">
     <div class="calendar-header">
@@ -84,6 +93,16 @@
         >
           Absence
         </button>
+
+        <button
+          mat-flat-button
+          (click)="addPresence()"
+          (keydown.enter)="addPresence()"
+          (keydown.space)="addPresence()"
+        >
+          Presence
+        </button>
+
 
       </div>
     </div>
@@ -182,12 +201,14 @@
             <span>{{ timeSlot }}</span>
           </td>
           <td
-              *ngFor="let day of weekDays; index as i"
-              cdkDropList
-              (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
-              [cdkDropListData]="appointments"
-              [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
-            >
+            *ngFor="let day of weekDays; index as i"
+            cdkDropList
+            (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
+            [cdkDropListData]="appointments"
+            [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
+            [class.presence-slot]="isSlotInPresence(monthDays[i], timeSlot)"
+            [class.today-column]="isToday(monthDays[i])"
+          >
             <div
               (click)="selectDate(monthDays[i], timeSlot)"
               (keydown.enter)="selectDate(monthDays[i], timeSlot)"

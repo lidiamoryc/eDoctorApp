@@ -25,6 +25,13 @@ export interface Absence {
   endTime: string;
 }
 
+export interface Presence {
+  id?: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,6 +40,7 @@ export class AppointmentService {
 
   private apiUrl = environment.apiUrl;
   private absenceApiUrl =  environment.absenceApiUrl;
+  private presenceApiUrl = 'http://localhost:3000/presence';
 
   constructor(private http: HttpClient,
               // private db: AngularFireDatabase
@@ -87,4 +95,20 @@ export class AppointmentService {
     );
   }
   
+    // Method to add a new presence
+    addPresence(presence: Presence): Observable<Presence> {
+      return this.http.post<Presence>(this.presenceApiUrl, presence);
+    }
+  
+    // Method to fetch presences
+    getPresences(): Observable<Presence[]> {
+      return this.http.get<any[]>(this.presenceApiUrl).pipe(
+        map((presences) =>
+          presences.map((presence) => ({
+            ...presence,
+            id: presence._id || presence.id, // Map _id to id if it exists
+          }))
+        )
+      );
+    }
   }

@@ -10,9 +10,104 @@
       "startTime": "09:00",
       "endTime": "11:00",
       "additional_info": ""
+    },
+    {
+      "id": "d312",
+      "date": "2025-01-18",
+      "name_and_surname": "Maria K",
+      "type": "first consultation",
+      "age": 23,
+      "gender": "female",
+      "startTime": "14:30",
+      "endTime": "16:00",
+      "additional_info": "",
+      "color": "blue"
+    },
+    {
+      "id": "9757",
+      "date": "2025-01-16",
+      "name_and_surname": "a",
+      "type": "first consultation",
+      "age": 2,
+      "gender": "female",
+      "startTime": "09:30",
+      "endTime": "12:30",
+      "additional_info": "",
+      "color": "blue"
+    },
+    {
+      "id": "3ded",
+      "date": "2025-01-07",
+      "name_and_surname": "ef",
+      "type": "prescription",
+      "age": 1,
+      "gender": "female",
+      "startTime": "09:30",
+      "endTime": "10:30",
+      "additional_info": "",
+      "color": "yellow"
+    },
+    {
+      "id": "9ee6",
+      "date": "2025-01-18",
+      "name_and_surname": "r",
+      "type": "prescription",
+      "age": 4,
+      "gender": "male",
+      "startTime": "10:00",
+      "endTime": "10:30",
+      "additional_info": "",
+      "color": "yellow"
+    },
+    {
+      "id": "ae3a",
+      "date": "2025-01-19",
+      "name_and_surname": "s",
+      "type": "prescription",
+      "age": 5,
+      "gender": "female",
+      "startTime": "11:00",
+      "endTime": "11:30",
+      "additional_info": "",
+      "color": "rgba(129, 196, 250, 0.61)"
+    },
+    {
+      "id": "6ff4",
+      "date": "2025-01-14",
+      "name_and_surname": "5",
+      "type": "prescription",
+      "age": 14,
+      "gender": "female",
+      "startTime": "14:00",
+      "endTime": "14:30",
+      "additional_info": "",
+      "color": "rgba(129, 196, 250, 0.61)"
+    },
+    {
+      "id": "b2e5",
+      "date": "2025-01-14",
+      "name_and_surname": "r",
+      "type": "first consultation",
+      "age": 4,
+      "gender": "male",
+      "startTime": "10:00",
+      "endTime": "11:30",
+      "additional_info": "",
+      "color": "rgba(186, 162, 255, 0.61)"
+    },
+    {
+      "id": "d60d",
+      "date": "2025-01-15",
+      "name_and_surname": "e",
+      "type": "first consultation",
+      "age": 1,
+      "gender": "female",
+      "startTime": "12:00",
+      "endTime": "13:00",
+      "additional_info": "",
+      "color": "rgba(186, 162, 255, 0.61)"
     }
   ],
-
   "absence": [
     {
       "id": "2b9a",
@@ -49,9 +144,40 @@
       "date": "2025-01-17",
       "startTime": "11:00",
       "endTime": "14:00"
+    },
+    {
+      "id": "017b",
+      "date": "2025-01-13",
+      "startTime": "11:00",
+      "endTime": "13:00"
     }
   ],
-
+  "presence": [
+    {
+      "id": "2b9a",
+      "date": "2025-01-09T23:00:00.000Z",
+      "startTime": "11:00",
+      "endTime": "12:00"
+    },
+    {
+      "id": "09b8",
+      "date": "2025-01-17",
+      "startTime": "11:00",
+      "endTime": "12:00"
+    },
+    {
+      "id": "d1ca",
+      "date": "2025-01-10",
+      "startTime": "15:00",
+      "endTime": "16:00"
+    },
+    {
+      "id": "2723",
+      "date": "2025-01-14",
+      "startTime": "14:00",
+      "endTime": "15:00"
+    }
+  ],
   "users": [
     {
       "id": "1",
@@ -80,6 +206,12 @@
     {
       "id": "768a",
       "username": "Lidiaa",
+      "password": "1",
+      "role": "patient"
+    },
+    {
+      "id": "495b",
+      "username": "1",
       "password": "1",
       "role": "patient"
     }
