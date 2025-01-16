@@ -15,4 +15,10 @@ export const routes: Routes = [
   },
   // Default route redirects to the login page
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
+
+  { 
+    path: 'users', 
+    loadChildren: () => 
+      import('./users-list/users.module').then(m => m.UsersModule) 
+  },
 ];
