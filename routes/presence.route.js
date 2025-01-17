@@ -1,7 +1,7 @@
 const express = require('express');
 const Presence = require('../models/presence.model');
 const router = express.Router();
-const {getAllAbsences, getAbsenceById, createAbsence, updateAbsence, deleteAbsence} = require('../controllers/absence.controller')
+const {getAllAbsences, getAbsenceById, createAbsence, updateAbsence, deleteAbsence} = require('../controllers/presence.controller')
 
 router.get('/', getAllAbsences);
 router.get('/:id', getAbsenceById);
