@@ -214,6 +214,12 @@
       "username": "1",
       "password": "1",
       "role": "patient"
+    },
+    {
+      "id": "7cb1",
+      "username": "john.kowalski",
+      "password": "1234qwer",
+      "role": "patient"
     }
   ]
 }
