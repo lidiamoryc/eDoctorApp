@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { Appointment, Absence } from '../appointment.service';
+import { Appointment, Absence } from './appointment.service';
 
 @Injectable({
   providedIn: 'root'

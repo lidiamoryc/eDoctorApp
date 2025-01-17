@@ -1,4 +1,5 @@
 <div class="container" cdkDropListGroup>
+  <app-navigation></app-navigation>
   <div class="calendar-container">
     <div class="calendar-header">
       <div>
@@ -84,7 +85,6 @@
         >
           Absence
         </button>
-
       </div>
     </div>
 
@@ -138,8 +138,12 @@
                   (keydown.space)="editAppointment(appointment, $event)"
                   matTooltip="
                     Name: {{ appointment.name_and_surname }} |
-                    Age: {{ appointment.age }} | Gender: {{ appointment.gender }} |
-                    Time: {{ appointment.startTime }} - {{ appointment.endTime }} |
+                    Age: {{ appointment.age }} | Gender: {{
+                    appointment.gender
+                  }} |
+                    Time: {{ appointment.startTime }} - {{
+                    appointment.endTime
+                  }} |
                     Visit type: {{ appointment.type }} | 
                   "
                   matTooltipPosition="above"
@@ -169,25 +173,28 @@
             <div class="header-date">
               {{ day }} {{ monthDays[i].getDate() }}
             </div>
-            <span class="event-count">visits: {{ getEventCountForDay(monthDays[i]) }} </span>
+            <span class="event-count"
+              >visits: {{ getEventCountForDay(monthDays[i]) }}
+            </span>
           </th>
         </tr>
       </thead>
       <tbody cdkDropListGroup>
         <tr *ngFor="let timeSlot of timeSlots">
-          <td [width]="10" 
-              class="calendar-slot-cell"
-              [class.current-time-slot]="isCurrentTimeSlot(timeSlot)"
-              >
+          <td
+            [width]="10"
+            class="calendar-slot-cell"
+            [class.current-time-slot]="isCurrentTimeSlot(timeSlot)"
+          >
             <span>{{ timeSlot }}</span>
           </td>
           <td
-              *ngFor="let day of weekDays; index as i"
-              cdkDropList
-              (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
-              [cdkDropListData]="appointments"
-              [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
-            >
+            *ngFor="let day of weekDays; index as i"
+            cdkDropList
+            (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
+            [cdkDropListData]="appointments"
+            [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
+          >
             <div
               (click)="selectDate(monthDays[i], timeSlot)"
               (keydown.enter)="selectDate(monthDays[i], timeSlot)"
@@ -234,23 +241,27 @@
       class="calendar-view-day"
       *ngIf="currentView === 'day'"
     >
-
-    <thead>
-      <tr>
-        <th colspan="2" class="day-header">
-          <div>
-            <span class="event-count" style="text-align: left; font-size: 1rem; padding-bottom: 10px;">visits: {{ getEventCountForDay(monthDays[0]) }}</span>
-          </div>
-        </th>
-      </tr>
-    </thead>
+      <thead>
+        <tr>
+          <th colspan="2" class="day-header">
+            <div>
+              <span
+                class="event-count"
+                style="text-align: left; font-size: 1rem; padding-bottom: 10px"
+                >visits: {{ getEventCountForDay(monthDays[0]) }}</span
+              >
+            </div>
+          </th>
+        </tr>
+      </thead>
 
       <tbody cdkDropListGroup>
         <tr *ngFor="let slot of timeSlots">
-          <td [width]="10" 
-              class="calendar-slot-cell"
-              [class.current-time-slot]="isCurrentTimeSlot(slot)"
-              >
+          <td
+            [width]="10"
+            class="calendar-slot-cell"
+            [class.current-time-slot]="isCurrentTimeSlot(slot)"
+          >
             <span>{{ slot }}</span>
           </td>
           <td
@@ -289,14 +300,12 @@
                 Visit type: {{ appointment.type }}
               "
               matTooltipPosition="above"
-              >
+            >
               <span>{{ appointment.name_and_surname }}</span>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-
-    
   </div>
 </div>

@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CommonModule } from '@angular/common';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
-import { BasketComponent } from '../basket/basket.component'
-import { AppointmentService, Appointment, Absence } from '../appointment.service'; 
+import { BasketComponent } from '../basket/basket.component';
+import { AppointmentService, Appointment, Absence } from '../services/appointment.service'; 
 import { AbsenceComponent } from '../absence/absence.component';
 import { take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 export enum CalendarView {
   Month = 'month',
@@ -19,6 +24,19 @@ export enum CalendarView {
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    DragDropModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatIconModule,
+    MatTooltipModule,
+    AppointmentDialogComponent,
+    AbsenceComponent,
+    NavigationComponent
+  ]
 })
 export class CalendarComponent implements OnInit {
   viewDate: Date = new Date();
@@ -32,6 +50,7 @@ export class CalendarComponent implements OnInit {
   now: Date = new Date();
   weeks: Date[][] = [];
   absences: Absence[] = [];
+  isDoctor$ = this.authService.isDoctor();
 
   public CalendarView = CalendarView;
 
@@ -371,7 +390,7 @@ export class CalendarComponent implements OnInit {
 
 
   addAbsence(): void {
-    this.authService.isDoctor().pipe(take(1)).subscribe(isDoctor => {
+    this.isDoctor$.pipe(take(1)).subscribe(isDoctor => {
       if (!isDoctor) {
         console.error('Unauthorized: Only doctors can add absences');
         return;
@@ -495,8 +514,4 @@ export class CalendarComponent implements OnInit {
       }
     });
   }
-  
-  
-  
-
 }  

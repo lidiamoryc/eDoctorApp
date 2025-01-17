@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppointmentService, Appointment } from '../appointment.service';  // Zaimportuj AppointmentService i Appointment
+import { AppointmentService, Appointment } from '../services/appointment.service';  // Zaimportuj AppointmentService i Appointment
 
 @Component({
   selector: 'app-basket',
