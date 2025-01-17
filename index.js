@@ -7,6 +7,9 @@ const appointmentRoute = require("./routes/appointments.route.js")
 const Absence = require('./models/absence.model.js');
 const absenceRoute = require("./routes/absence.route.js")
 
+const Presence = require('./models/presence.model.js');
+const presenceRoute = require("./routes/presence.route.js")
+
 const app = express();
 
 const cors = require('cors');
@@ -20,6 +23,7 @@ app.use(express.urlencoded({extended: false}))
 // routes
 app.use("/api/appointments", appointmentRoute);
 app.use("/api/absence", absenceRoute);
+app.use("/api/presence", presenceRoute);
 
 
 app.get('/', (req, res) => {
