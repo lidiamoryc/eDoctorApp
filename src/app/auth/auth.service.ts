@@ -1,70 +1,89 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Observable, from, switchMap, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface User {
-  id: number;
-  username: string;
-  password: string;
-  role: string;
+  uid: string;      // Firebase UID
+  email: string;
+  displayName?: string;
+  role?: string;
+  photoURL?: string;
+  emailVerified?: boolean;
+  id?: string;      // For backward compatibility with existing templates
+  createdAt?: string;
+  lastLoginAt?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000/users'; // Adjust the URL as needed
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  constructor(
+    private afAuth: AngularFireAuth,
+    private firestore: AngularFirestore
+  ) {}
 
-  constructor(private http: HttpClient) {}
-
-  // Method to verify user credentials
-  login(username: string, password: string): Observable<User | null> {
-    return new Observable((observer) => {
-      this.http.get<User[]>(this.apiUrl).subscribe({
-        next: (users) => {
-          const user = users.find(
-            (u) => u.username === username && u.password === password
+  // Sign up with email/password
+  signup(email: string, password: string): Observable<any> {
+    return from(this.afAuth.createUserWithEmailAndPassword(email, password)).pipe(
+      switchMap(credential => {
+        if (credential.user) {
+          const user: User = {
+            uid: credential.user.uid,
+            email: credential.user.email!,
+            role: 'user', // Default role
+            emailVerified: credential.user.emailVerified,
+            id: credential.user.uid, // For backward compatibility
+            createdAt: new Date().toISOString(),
+            lastLoginAt: new Date().toISOString()
+          };
+          // Create user document in Firestore
+          return from(this.firestore.doc(`users/${user.uid}`).set(user)).pipe(
+            map(() => credential)
           );
-          if (user) {
-            this.currentUserSubject.next(user); // Set logged-in user
-          }
-          observer.next(user || null); // Return user if found, otherwise null
-          observer.complete();
-        },
-        error: (err) => observer.error(err),
-      });
-    });
+        }
+        throw new Error('User creation failed');
+      })
+    );
   }
 
-  checkUsernameExists(username: string): Observable<boolean> {
-    return new Observable((observer) => {
-      this.http.get<User[]>(this.apiUrl).subscribe({
-        next: (users) => {
-          const exists = users.some((u) => u.username === username);
-          observer.next(exists); // Return true if username exists, otherwise false
-          observer.complete();
-        },
-        error: (err) => observer.error(err),
-      });
-    });
+  // Sign in with email/password
+  login(email: string, password: string): Observable<any> {
+    return from(this.afAuth.signInWithEmailAndPassword(email, password)).pipe(
+      switchMap(credential => {
+        if (credential.user) {
+          // Update last login timestamp
+          return from(this.firestore.doc(`users/${credential.user.uid}`).update({
+            lastLoginAt: new Date().toISOString()
+          })).pipe(
+            map(() => credential)
+          );
+        }
+        return of(credential);
+      })
+    );
   }
 
-  createUser(user: Partial<User>): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user); // Add user to db.json
+  // Sign out
+  logout(): Observable<void> {
+    return from(this.afAuth.signOut());
   }
 
-
-  logout(): void {
-    this.currentUserSubject.next(null); // Clear logged-in user
+  // Get current user
+  getCurrentUser(): Observable<any> {
+    return this.afAuth.authState;
   }
 
-  getCurrentUser(): Observable<User | null> {
-    return this.currentUserSubject.asObservable();
+  // Check if user is logged in
+  isLoggedIn(): Observable<boolean> {
+    return this.afAuth.authState.pipe(
+      map(user => !!user)
+    );
   }
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl);
+    return this.firestore.collection<User>('users').valueChanges();
   }
-  
 }

@@ -9,7 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
-
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../../environments/environment';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,7 +29,13 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule
   ],
+  providers: [
+    { provide: 'angularfire2.app.options', useValue: environment.firebaseConfig }
+  ]
 })
-export class AuthModule {}
+export class AuthModule { }

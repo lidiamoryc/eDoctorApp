@@ -17,11 +17,11 @@ export class UserListComponent {
 
   private fetchUsers(): void {
     this.authService.getAllUsers().subscribe({
-      next: (data) => {
+      next: (data: User[]) => {
         this.users = data;
         this.isLoading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error fetching users:', error);
         this.isLoading = false;
       },
