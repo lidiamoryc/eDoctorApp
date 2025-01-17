@@ -7,9 +7,6 @@ const appointmentRoute = require("./routes/appointments.route.js")
 const Absence = require('./models/absence.model.js');
 const absenceRoute = require("./routes/absence.route.js")
 
-const Presence = require('./models/presence.model.js');
-const presenceRoute = require("./routes/presence.route.js")
-
 const app = express();
 
 const cors = require('cors');
@@ -18,23 +15,16 @@ app.use(cors());
 
 // middleware
 app.use(express.json());
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 
 // routes
 app.use("/api/appointments", appointmentRoute);
 app.use("/api/absence", absenceRoute);
-app.use("/api/presence", presenceRoute);
 
 
 app.get('/', (req, res) => {
-  res.send('Hello from node api server');
+    res.send('Hello from node api server');
 });
-
-  
-
-
-
-
 
 
 // app.get('/api/products', async (req, res) => {
@@ -117,15 +107,15 @@ app.get('/', (req, res) => {
 
 
 
-mongoose.connect("mongodb+srv://admin:admin@backenddb.dxynh.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB")
-.then(() => {
-    console.log("connected to database");
+mongoose.connect("mongodb+srv://piotrbledowski77:PPWaCo83To5v3A8Q@e-doctor-app.nm0w4.mongodb.net/?retryWrites=true&w=majority&appName=e-doctor-app")
+    .then(() => {
+        console.log("connected to database");
 
-    app.listen(3000, () => {
-        console.log('server is running on port 3000')
+        app.listen(3000, () => {
+            console.log('server is running on port 3000')
+        });
+
+    })
+    .catch(() => {
+        console.log("connection failed");
     });
-
-})
-.catch(() => {
-    console.log("connection failed");
-});

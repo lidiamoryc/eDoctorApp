@@ -61,9 +61,9 @@ const deleteAbsence = async (req, res) => {
 
 
 module.exports = {
-    getAllAbsences,
-    getAbsenceById,
-    createAbsence,
-    updateAbsence,
-    deleteAbsence
+  getAllAbsences,
+  getAbsenceById,
+  createAbsence,
+  updateAbsence,
+  deleteAbsence
 };
