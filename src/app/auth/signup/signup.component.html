@@ -1,33 +1,54 @@
+{% comment %}
 <div class="signup-container">
-    <h2>Sign Up</h2>
-    <form (ngSubmit)="signup()">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Username</mat-label>
-        <input matInput [(ngModel)]="username" name="username" required />
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          [(ngModel)]="password"
-          name="password"
-          type="password"
-          required
-        />
-      </mat-form-field>
-  
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Role</mat-label>
-        <mat-select [(ngModel)]="role" name="role" required>
-          <mat-option value="patient">Patient</mat-option>
-          <mat-option value="doctor">Doctor</mat-option>
-        </mat-select>
-      </mat-form-field>
-  
-      <button mat-flat-button color="primary" type="submit">Sign Up</button>
-      <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
-      <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
-    </form>
+  <h2>Sign Up</h2>
+
+  <form (ngSubmit)="signup()" #signupForm="ngForm">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="email"
+        required
+        email
+        #emailInput="ngModel"
+      />
+      <div
+        class="error-message"
+        *ngIf="emailInput.invalid && emailInput.touched"
+      >
+        Please enter a valid email address
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="password"
+        required
+        minlength="6"
+        #passwordInput="ngModel"
+      />
+      <div
+        class="error-message"
+        *ngIf="passwordInput.invalid && passwordInput.touched"
+      >
+        Password must be at least 6 characters long
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="!signupForm.valid">Sign Up</button>
+  </form>
+
+  <div class="message success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="message error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+  <div class="login-link">
+    Already have an account? <a routerLink="/auth/login">Login</a>
   </div>
-  
+</div>
+{% endcomment %}

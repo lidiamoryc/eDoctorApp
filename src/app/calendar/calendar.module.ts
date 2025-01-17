@@ -11,12 +11,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
 import { BasketComponent } from '../basket/basket.component';
-import {AbsenceComponent} from '../absence/absence.component'
+import { AbsenceComponent } from '../absence/absence.component'
 import { AppComponent } from '../app.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {PresenceComponent} from '../presence/presence.component'
+import { PresenceComponent } from '../presence/presence.component'
 
 
 
@@ -28,11 +28,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 const routes: Routes = [{ path: '', component: CalendarComponent }];
 
 @NgModule({
-  declarations: [CalendarComponent, BasketComponent, ],
+  declarations: [CalendarComponent, BasketComponent,],
   imports: [
-    AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AppComponent,
     CommonModule,
     MatButtonModule,
     MatButtonToggleGroup,
@@ -46,6 +43,6 @@ const routes: Routes = [{ path: '', component: CalendarComponent }];
     MatSelectModule, // Import MatSelectModule
     MatTooltipModule,
     PresenceComponent
-    ],
+  ],
 })
-export class CalendarModule {}
+export class CalendarModule { }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { MatCardModule } from '@angular/material/card';
@@ -10,9 +10,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
   imports: [
     CommonModule,
     RouterModule,
@@ -25,8 +25,8 @@ import { CommonModule } from '@angular/common';
   ],
   standalone: true
 })
-export class LoginComponent {
-  loginForm: FormGroup;
+export class RegisterComponent {
+  registerForm: FormGroup;
   error: string | null = null;
 
   constructor(
@@ -34,21 +34,23 @@ export class LoginComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      displayName: ['', Validators.required],
+      role: ['patient', Validators.required]
     });
   }
 
   async onSubmit() {
-    if (this.loginForm.valid) {
+    if (this.registerForm.valid) {
       try {
-        const { email, password } = this.loginForm.value;
-        await this.authService.login(email, password);
+        const { email, password, role, displayName } = this.registerForm.value;
+        await this.authService.register(email, password, role, displayName);
         await this.router.navigate(['/calendar']);
       } catch (error: any) {
         this.error = error.message;
       }
     }
   }
-}
+} 
