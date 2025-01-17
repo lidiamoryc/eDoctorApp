@@ -1,11 +1,14 @@
 <div class="signup-container">
-    <h2>Sign Up</h2>
-    <form (ngSubmit)="signup()">
+  <mat-card class="signup-card">
+    <h2 class="signup-title">Sign Up</h2>
+    <form (ngSubmit)="signup()" class="signup-form">
+      <!-- Username -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Username</mat-label>
         <input matInput [(ngModel)]="username" name="username" required />
       </mat-form-field>
-  
+
+      <!-- Password -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
         <input
@@ -16,7 +19,8 @@
           required
         />
       </mat-form-field>
-  
+
+      <!-- Role -->
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Role</mat-label>
         <mat-select [(ngModel)]="role" name="role" required>
@@ -24,10 +28,15 @@
           <mat-option value="doctor">Doctor</mat-option>
         </mat-select>
       </mat-form-field>
-  
-      <button mat-flat-button color="primary" type="submit">Sign Up</button>
+
+      <!-- Signup Button -->
+      <button mat-flat-button color="primary" type="submit" class="full-width">
+        Sign Up
+      </button>
+
+      <!-- Messages -->
       <p class="success-message" *ngIf="successMessage">{{ successMessage }}</p>
       <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
     </form>
-  </div>
-  
+  </mat-card>
+</div>

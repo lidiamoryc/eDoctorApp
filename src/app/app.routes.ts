@@ -20,7 +20,14 @@ export const routes: Routes = [
     path: 'users',
     loadChildren: () =>
       import('./users-list/users.module').then((m) => m.UsersModule),
-    canActivate: [AuthGuard], // Apply the AuthGuard here
+    // canActivate: [AuthGuard], // Apply the AuthGuard here
+  },
+
+  {
+    path: 'doctors',
+    loadChildren: () =>
+      import('./doctors-list/doctors.module').then((m) => m.DoctorsModule),
+    // canActivate: [AuthGuard], // Apply the AuthGuard here
   },
 
   // Default route redirects to the login page

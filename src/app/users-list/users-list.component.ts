@@ -26,4 +26,17 @@ export class UserListComponent {
       },
     });
   }
+
+  deleteUser(userId: number): void {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.authService.deleteUser(userId).subscribe({
+        next: () => {
+          this.users = this.users.filter((user) => user.id !== userId); // Remove user locally
+        },
+        error: (err) => {
+          console.error('Error deleting user:', err);
+        },
+      });
+    }
+  }
 }

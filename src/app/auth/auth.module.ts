@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
 
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
 })
 export class AuthModule {}

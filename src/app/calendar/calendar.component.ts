@@ -7,7 +7,7 @@ import { AppointmentService, Appointment, Absence, Presence} from '../appointmen
 import { AbsenceComponent } from '../absence/absence.component';
 import { AuthService, User } from '../auth/auth.service';
 import { PresenceComponent } from '../presence/presence.component';
-
+import { Router } from '@angular/router';
 
 export enum CalendarView {
   Month = 'month',
@@ -37,7 +37,7 @@ export class CalendarComponent implements OnInit {
 
   public CalendarView = CalendarView;
 
-  constructor(public dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
+  constructor(private router: Router, public dialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
     this.appointments.forEach((appointment) => {
       appointment.color = this.getRandomColor();
     });
@@ -55,6 +55,10 @@ export class CalendarComponent implements OnInit {
     });
   }
 
+  logout(): void {
+    this.authService.logout(); // Clear user session if necessary
+    this.router.navigate(['/auth/login']); // Navigate to login page
+  }
   // logout(): void {
   //   this.authService.logout();
   //   window.location.href = '/auth/login'; // Redirect to login page
@@ -475,35 +479,36 @@ export class CalendarComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Presence data:', result); // Log the absence data
-        const formattedPresence = {
-          date: result.date, // Use the selected date from the form
-          name_and_surname: result.name_and_surname,
-          type: result.type,
-          age: result.age,
-          gender: result.gender,
-          startTime: result.startTime, // Use the start time from the form
-          endTime: result.endTime, // Use the end time from the form
-          additional_info: result.additional_info,
-        };
+      if (result && Array.isArray(result)) {
+        console.log('Generated Presences:', result); // Log the generated list of presences
   
-        // Send the absence to the backend
-        this.appointmentService.addPresence(formattedPresence).subscribe({
-          next: (response) => {
-            console.log('Presence added successfully:', response);
+        // Loop through the generated presences and send each one to the backend
+        result.forEach((presence) => {
+          const formattedPresence = {
+            date: presence.date, // Formatted date from the dialog
+            startTime: presence.startTime, // Start time
+            endTime: presence.endTime, // End time
+            name_and_surname: presence.name_and_surname || null, // Optional field
+            type: presence.type || null, // Optional field
+            age: presence.age || null, // Optional field
+            gender: presence.gender || null, // Optional field
+            additional_info: presence.additional_info || null, // Optional field
+          };
   
-            // Refresh the absences list
-            this.fetchPresences(); // Re-fetch absences from the backend
-          },
-          error: (err) => {
-            console.error('Error adding absence:', err);
-          },
+          this.appointmentService.addPresence(formattedPresence).subscribe({
+            next: (response) => {
+              console.log('Presence added successfully:', response);
+              this.fetchPresences(); // Refresh the presences list
+            },
+            error: (err) => {
+              console.error('Error adding presence:', err);
+            },
+          });
         });
       }
     });
   }
-
+  
 
  
   getAppointmentsForDate(day: Date, timeSlots: string[]) {

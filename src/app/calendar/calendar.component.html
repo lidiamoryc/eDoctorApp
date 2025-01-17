@@ -1,11 +1,9 @@
-<!-- <div class="header">
-  <div *ngIf="currentUser">
-    <span>Welcome, {{ currentUser.username }}!</span>
-    <button (click)="logout()">Logout</button>
+<div class="header">
+  <div class="header-content">
+    <h1 style="font-size: 2rem;">Hello!</h1>
+    <button mat-flat-button class="logout-button" style="background-color: #b8d4ee;" (click)="logout()">Logout</button>
   </div>
 </div>
-
- -->
 
 <div class="container" cdkDropListGroup>
   <div class="calendar-container">
@@ -72,8 +70,11 @@
           (click)="selectDate()"
           (keydown.enter)="selectDate()"
           (keydown.space)="selectDate()"
+          matTooltip="Add new appointment"
+          matTooltipPosition="above"
+          [ngStyle]="{ 'background-color': '#b8d4ee', 'color': '#2f76b6' }"
         >
-          Add Appointment
+          <mat-icon>add</mat-icon> Appointment
         </button>
 
         <button
@@ -81,8 +82,11 @@
           (click)="openBasket()"
           (keydown.enter)="openBasket()"
           (keydown.space)="openBasket()"
+          matTooltip="Show the cart"
+          matTooltipPosition="above"
+          [ngStyle]="{ 'background-color': '#E1BEE7', 'color': '#a479ab' }"
         >
-          Basket
+          <mat-icon>shopping_cart</mat-icon>
         </button>
 
         <button
@@ -90,8 +94,12 @@
           (click)="addAbsence()"
           (keydown.enter)="addAbsence()"
           (keydown.space)="addAbsence()"
+          matTooltip="Add a new absence record"
+          matTooltipPosition="above"
+          [ngStyle]="{ 'background-color': '#FFCDD2', 'color': '#B71C1C' }"
         >
-          Absence
+
+        <mat-icon>close</mat-icon>
         </button>
 
         <button
@@ -99,8 +107,11 @@
           (click)="addPresence()"
           (keydown.enter)="addPresence()"
           (keydown.space)="addPresence()"
+          matTooltip="Add a new presence record"
+          matTooltipPosition="above"
+          [ngStyle]="{ 'background-color': '#C8E6C9', 'color': '#1B5E20' }"
         >
-          Presence
+        <mat-icon>check</mat-icon>
         </button>
 
 
@@ -205,9 +216,9 @@
             cdkDropList
             (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
             [cdkDropListData]="appointments"
-            [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
-            [class.presence-slot]="isSlotInPresence(monthDays[i], timeSlot)"
             [class.today-column]="isToday(monthDays[i])"
+            [class.presence-slot]="isSlotInPresence(monthDays[i], timeSlot)"
+            [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"            
           >
             <div
               (click)="selectDate(monthDays[i], timeSlot)"
@@ -278,6 +289,7 @@
             cdkDropList
             (cdkDropListDropped)="drop($event, monthDays[0], slot)"
             [cdkDropListData]="appointments"
+            [class.presence-slot]="isSlotInPresence(monthDays[0], slot)"
             [class.absence-slot]="isSlotInAbsence(monthDays[0], slot)"
           >
             <div
@@ -317,7 +329,5 @@
         </tr>
       </tbody>
     </table>
-
-    
-  </div>
 </div>
+

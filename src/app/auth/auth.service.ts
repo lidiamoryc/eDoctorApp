@@ -50,6 +50,11 @@ export class AuthService {
     });
   }
 
+  deleteUser(userId: number): Observable<void> {
+    const url = `${this.apiUrl}/${userId}`; // API endpoint for deleting a user
+    return this.http.delete<void>(url); // Delete user from the backend
+  }
+
   createUser(user: Partial<User>): Observable<User> {
     return this.http.post<User>(this.apiUrl, user); // Add user to db.json
   }
@@ -66,5 +71,19 @@ export class AuthService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
+
+  getDoctors(): Observable<User[]> {
+    return new Observable((observer) => {
+      this.http.get<User[]>(this.apiUrl).subscribe({
+        next: (users) => {
+          const doctors = users.filter((user) => user.role === 'doctor'); // Filter users by role
+          observer.next(doctors); // Return the list of doctors
+          observer.complete();
+        },
+        error: (err) => observer.error(err),
+      });
+    });
+  }
+  
   
 }

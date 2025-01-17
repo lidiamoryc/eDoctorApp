@@ -37,6 +37,10 @@ export class LoginComponent {
     this.router.navigate(['/auth/signup']); // Redirect to signup page
   }
 
+  enterAsGuest(): void {
+    this.router.navigate(['/doctors']); // Redirect to the doctors list
+  }
+
   
 }
   
