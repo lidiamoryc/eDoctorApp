@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService, User } from '../auth/auth.service';
-import { UsersModule } from './users.module';
 
 @Component({
   selector: 'app-user-list',
@@ -11,7 +10,7 @@ export class UserListComponent {
   users: User[] = [];
   isLoading: boolean = true;
 
-  constructor(private authService: AuthService, private usersModule: UsersModule) {
+  constructor(private authService: AuthService) {
     this.fetchUsers();
   }
 

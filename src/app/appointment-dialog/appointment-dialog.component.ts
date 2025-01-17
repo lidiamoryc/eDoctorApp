@@ -76,6 +76,7 @@ export class AppointmentDialogComponent {
         date: [this.data.date, Validators.required],
         startTime: [this.data.startTime || '', Validators.required],
         endTime: [this.data.endTime || '', Validators.required],
+        
       },
       { validators: [this.timeRangeValidator,
                     this.absenceValidator(this.data.absences || []),
@@ -109,8 +110,13 @@ export class AppointmentDialogComponent {
     return `${year}-${month}-${day}`;
   }
 
-  eventOverlapValidator(existingEvents: any[]): ValidatorFn {
+  eventOverlapValidator(existingEvents: Appointment[]): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      // Skip overlap validation during edit operations
+      if (this.data.id) {
+        return null;
+      }
+  
       const date = this.formatAsYYYYMMDD(control.get('date')?.value);
       const startTime = control.get('startTime')?.value;
       const endTime = control.get('endTime')?.value;
@@ -123,6 +129,11 @@ export class AppointmentDialogComponent {
         const newEventEnd = new Date(`${date}T${endHours}:${endMinutes}`);
   
         const overlap = existingEvents.some(event => {
+          // Skip the current appointment during edit operations
+          if (event.id === this.data.id) {
+            return false;
+          }
+  
           const eventDate = this.formatAsYYYYMMDD(event.date);
           const [eventStartHours, eventStartMinutes] = event.startTime.split(':');
           const [eventEndHours, eventEndMinutes] = event.endTime.split(':');
@@ -148,6 +159,7 @@ export class AppointmentDialogComponent {
       return null;
     };
   }
+  
 
   
 

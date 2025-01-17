@@ -1,144 +1,43 @@
 {
   "appointments": [
     {
-      "id": "6056",
-      "date": "2025-01-17",
       "name_and_surname": "Maria Kowalska",
       "type": "first consultation",
-      "age": 34,
       "gender": "female",
-      "startTime": "09:00",
-      "endTime": "11:00",
-      "additional_info": ""
+      "age": 34,
+      "date": "2025-01-17",
+      "startTime": "09:30",
+      "endTime": "10:30",
+      "id": "6056",
+      "additional_info": "i have a headache since 2025-01-01",
+      "color": "rgba(186, 162, 255, 0.61)"
     },
     {
       "id": "d312",
       "date": "2025-01-18",
-      "name_and_surname": "Maria K",
+      "name_and_surname": "Paweł Sroka",
       "type": "first consultation",
       "age": 23,
-      "gender": "female",
+      "gender": "male",
       "startTime": "14:30",
       "endTime": "16:00",
-      "additional_info": "",
-      "color": "blue"
-    },
-    {
-      "id": "9757",
-      "date": "2025-01-16",
-      "name_and_surname": "a",
-      "type": "first consultation",
-      "age": 2,
-      "gender": "female",
-      "startTime": "09:30",
-      "endTime": "12:30",
-      "additional_info": "",
-      "color": "blue"
+      "additional_info": "-",
+      "color": "rgba(186, 162, 255, 0.61)"
     },
     {
       "id": "3ded",
       "date": "2025-01-07",
-      "name_and_surname": "ef",
+      "name_and_surname": "Aleksandra Wrona",
       "type": "prescription",
-      "age": 1,
+      "age": 80,
       "gender": "female",
       "startTime": "09:30",
       "endTime": "10:30",
-      "additional_info": "",
-      "color": "yellow"
-    },
-    {
-      "id": "9ee6",
-      "date": "2025-01-18",
-      "name_and_surname": "r",
-      "type": "prescription",
-      "age": 4,
-      "gender": "male",
-      "startTime": "10:00",
-      "endTime": "10:30",
-      "additional_info": "",
-      "color": "yellow"
-    },
-    {
-      "id": "ae3a",
-      "date": "2025-01-19",
-      "name_and_surname": "s",
-      "type": "prescription",
-      "age": 5,
-      "gender": "female",
-      "startTime": "11:00",
-      "endTime": "11:30",
-      "additional_info": "",
+      "additional_info": "I need prescription for medicines that i used to take until now.",
       "color": "rgba(129, 196, 250, 0.61)"
-    },
-    {
-      "id": "6ff4",
-      "date": "2025-01-14",
-      "name_and_surname": "5",
-      "type": "prescription",
-      "age": 14,
-      "gender": "female",
-      "startTime": "14:00",
-      "endTime": "14:30",
-      "additional_info": "",
-      "color": "rgba(129, 196, 250, 0.61)"
-    },
-    {
-      "id": "b2e5",
-      "date": "2025-01-14",
-      "name_and_surname": "r",
-      "type": "first consultation",
-      "age": 4,
-      "gender": "male",
-      "startTime": "10:00",
-      "endTime": "11:30",
-      "additional_info": "",
-      "color": "rgba(186, 162, 255, 0.61)"
-    },
-    {
-      "id": "d60d",
-      "date": "2025-01-15",
-      "name_and_surname": "e",
-      "type": "first consultation",
-      "age": 1,
-      "gender": "female",
-      "startTime": "12:00",
-      "endTime": "13:00",
-      "additional_info": "",
-      "color": "rgba(186, 162, 255, 0.61)"
     }
   ],
   "absence": [
-    {
-      "id": "2b9a",
-      "date": "2025-01-09T23:00:00.000Z",
-      "startTime": "11:00",
-      "endTime": "12:00"
-    },
-    {
-      "id": "c138",
-      "date": "2025-01-15T23:00:00.000Z",
-      "startTime": "11:00",
-      "endTime": "12:00"
-    },
-    {
-      "id": "255f",
-      "date": "2325-01-01T00:00:00.000Z",
-      "startTime": "11:00",
-      "endTime": "12:00"
-    },
-    {
-      "id": "6559",
-      "date": "2025-01-17T23:00:00.000Z",
-      "startTime": "15:00",
-      "endTime": "16:00"
-    },
-    {
-      "id": "1f2f",
-      "date": "2025-01-18T23:00:00.000Z",
-      "startTime": "11:00",
-      "endTime": "15:00"
-    },
     {
       "id": "b5c0",
       "date": "2025-01-17",
@@ -150,6 +49,54 @@
       "date": "2025-01-13",
       "startTime": "11:00",
       "endTime": "13:00"
+    },
+    {
+      "id": "799d",
+      "date": "2025-01-13",
+      "startTime": "11:00",
+      "endTime": "12:00"
+    },
+    {
+      "id": "434f",
+      "date": "2025-01-14",
+      "startTime": "11:00",
+      "endTime": "12:00"
+    },
+    {
+      "id": "5fc0",
+      "date": "2025-01-13",
+      "startTime": "09:00",
+      "endTime": "09:30"
+    },
+    {
+      "id": "5772",
+      "date": "2025-01-14",
+      "startTime": "09:00",
+      "endTime": "09:30"
+    },
+    {
+      "id": "d420",
+      "date": "2025-01-15",
+      "startTime": "09:00",
+      "endTime": "09:30"
+    },
+    {
+      "id": "3a49",
+      "date": "2025-01-16",
+      "startTime": "09:00",
+      "endTime": "09:30"
+    },
+    {
+      "id": "7010",
+      "date": "2025-01-18",
+      "startTime": "09:00",
+      "endTime": "09:30"
+    },
+    {
+      "id": "d57d",
+      "date": "2025-01-17",
+      "startTime": "09:00",
+      "endTime": "09:30"
     }
   ],
   "presence": [
@@ -188,32 +135,26 @@
     {
       "id": "2",
       "username": "user1",
-      "password": "userpassword",
-      "role": "user"
-    },
-    {
-      "id": "69d3",
-      "username": "Lidia",
       "password": "123",
       "role": "user"
     },
     {
-      "id": "4aa1",
-      "username": "Lidia",
-      "password": "1",
+      "id": "69d3",
+      "username": "user2",
+      "password": "123",
       "role": "user"
     },
     {
-      "id": "768a",
-      "username": "Lidiaa",
-      "password": "1",
-      "role": "patient"
+      "id": "495b",
+      "username": "dr Marcin Adamczyk",
+      "password": "123",
+      "role": "doctor"
     },
     {
-      "id": "495b",
-      "username": "1",
-      "password": "1",
-      "role": "patient"
+      "id": "495c",
+      "username": "dr Katarzyna Wak",
+      "password": "123",
+      "role": "doctor"
     }
   ]
 }

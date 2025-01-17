@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-absence',
@@ -21,6 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatDatepickerModule,
     ReactiveFormsModule,
+    MatOptionModule,
+    MatSelectModule
   ],
 })
 export class AbsenceComponent {
@@ -33,10 +37,12 @@ export class AbsenceComponent {
     private formBuilder: FormBuilder
   ) {
     this.absenceForm = this.formBuilder.group({
-      date: [null, Validators.required], // Absence date
+      date: [null, Validators.required], // Start date
       startTime: ['', Validators.required], // Start time
       endTime: ['', Validators.required], // End time
-    }, { validators: this.timeRangeValidator }); // Add time range validation
+      repeat: ['none'], // Repeat options: none, daily, weekly
+      until: [null], // End date for repetition
+    }, { validators: this.timeRangeValidator });
   }
 
   // Validation: Ensure end time is after start time
@@ -50,19 +56,51 @@ export class AbsenceComponent {
     return null;
   }
 
+  private generateRepeatedDates(startDate: Date, repeat: string, until: Date): Date[] {
+    const dates: Date[] = [];
+    const currentDate = new Date(startDate);
+  
+    while (currentDate <= until) {
+      dates.push(new Date(currentDate)); // Add the current date to the list
+  
+      if (repeat === 'daily') {
+        currentDate.setDate(currentDate.getDate() + 1); // Add one day
+      } else if (repeat === 'weekly') {
+        currentDate.setDate(currentDate.getDate() + 7); // Add one week
+      } else {
+        break; // If no repeat, stop
+      }
+    }
+  
+    return dates;
+  }
+  
+
   onSaveClick(): void {
     if (this.absenceForm.valid) {
-      const rawDate = this.absenceForm.value.date;
-      const formattedDate = this.formatDateToISOString(rawDate);
+      const rawStartDate = this.absenceForm.value.date;
+      const formattedStartDate = this.formatDateToISOString(rawStartDate);
+      const repeat = this.absenceForm.value.repeat;
+      const untilDate = this.absenceForm.value.until
+        ? new Date(this.absenceForm.value.until)
+        : null;
   
-      const absenceData = {
-        ...this.absenceForm.value,
-        date: formattedDate, // Replace the raw date with the formatted date
-      };
+      // Generate repeated dates
+      const repeatedDates = repeat !== 'none' && untilDate
+        ? this.generateRepeatedDates(new Date(formattedStartDate), repeat, untilDate)
+        : [new Date(formattedStartDate)];
   
-      this.dialogRef.close(absenceData); // Send normalized data back to parent
+      // Create absence records for each date
+      const absences = repeatedDates.map(date => ({
+        date: this.formatDateToISOString(date), // Format date as YYYY-MM-DD
+        startTime: this.absenceForm.value.startTime,
+        endTime: this.absenceForm.value.endTime,
+      }));
+  
+      this.dialogRef.close(absences); // Send the list of absences back to the parent
     }
   }
+  
   
   // Utility to format the date to YYYY-MM-DD (without timezone adjustments)
   private formatDateToISOString(date: Date): string {

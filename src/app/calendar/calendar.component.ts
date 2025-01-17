@@ -447,34 +447,25 @@ export class CalendarComponent implements OnInit {
     });
   
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Absence data:', result); // Log the absence data
-        const formattedAbsence = {
-          date: result.date, // Use the selected date from the form
-          name_and_surname: result.name_and_surname,
-          type: result.type,
-          age: result.age,
-          gender: result.gender,
-          startTime: result.startTime, // Use the start time from the form
-          endTime: result.endTime, // Use the end time from the form
-          additional_info: result.additional_info,
-        };
+      if (result && Array.isArray(result)) {
+        console.log('Generated Absences:', result); // Log the generated list of absences
   
-        // Send the absence to the backend
-        this.appointmentService.addAbsence(formattedAbsence).subscribe({
-          next: (response) => {
-            console.log('Absence added successfully:', response);
-  
-            // Refresh the absences list
-            this.fetchAbsences(); // Re-fetch absences from the backend
-          },
-          error: (err) => {
-            console.error('Error adding absence:', err);
-          },
+        // Loop through the generated absences and send each one to the backend
+        result.forEach((absence) => {
+          this.appointmentService.addAbsence(absence).subscribe({
+            next: (response) => {
+              console.log('Absence added successfully:', response);
+              this.fetchAbsences(); // Refresh the absences list after each addition
+            },
+            error: (err) => {
+              console.error('Error adding absence:', err);
+            },
+          });
         });
       }
     });
   }
+  
 
 
   addPresence(): void {

@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth/guard/auth.guard';
+
 
 export const routes: Routes = [
   // Lazy load the Calendar Module
@@ -13,12 +15,16 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./auth/auth.module').then((m) => m.AuthModule),
   },
+
+  {
+    path: 'users',
+    loadChildren: () =>
+      import('./users-list/users.module').then((m) => m.UsersModule),
+    canActivate: [AuthGuard], // Apply the AuthGuard here
+  },
+
   // Default route redirects to the login page
   { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
 
-  { 
-    path: 'users', 
-    loadChildren: () => 
-      import('./users-list/users.module').then(m => m.UsersModule) 
-  },
+
 ];
