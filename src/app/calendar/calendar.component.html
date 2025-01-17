@@ -1,7 +1,7 @@
 <!-- <div class="header">
   <div *ngIf="currentUser">
-    <span>Welcome, {{ currentUser.username }}!</span>
-    <button (click)="logout()">Logout</button>
+    <span>Witaj, {{ currentUser.username }}!</span>
+    <button (click)="logout()">Wyloguj</button>
   </div>
 </div>
 
@@ -30,16 +30,16 @@
         class="calendar-view-toggle"
         name="currentView"
         (change)="switchToView($event.value)"
-        aria-label="Calendar-View"
+        aria-label="Widok kalendarza"
       >
         <mat-button-toggle value="{{ CalendarView.Month }}"
-          >Month</mat-button-toggle
+          >Miesiąc</mat-button-toggle
         >
         <mat-button-toggle checked="{{ true }}" value="{{ CalendarView.Week }}"
-          >Week</mat-button-toggle
+          >Tydzień</mat-button-toggle
         >
         <mat-button-toggle value="{{ CalendarView.Day }}"
-          >Day</mat-button-toggle
+          >Dzień</mat-button-toggle
         >
       </mat-button-toggle-group>
       <div class="calendar-controls">
@@ -57,7 +57,7 @@
           (keydown.enter)="viewToday()"
           (keydown.space)="viewToday()"
         >
-          Today
+          Dziś
         </button>
         <button
           mat-icon-button
@@ -73,7 +73,7 @@
           (keydown.enter)="selectDate()"
           (keydown.space)="selectDate()"
         >
-          Add Appointment
+          Dodaj spotkanie
         </button>
 
         <button
@@ -82,7 +82,7 @@
           (keydown.enter)="openBasket()"
           (keydown.space)="openBasket()"
         >
-          Basket
+          Koszyk
         </button>
 
         <button
@@ -91,23 +91,12 @@
           (keydown.enter)="addAbsence()"
           (keydown.space)="addAbsence()"
         >
-          Absence
+          Nieobecność
         </button>
-
-        <button
-          mat-flat-button
-          (click)="addPresence()"
-          (keydown.enter)="addPresence()"
-          (keydown.space)="addPresence()"
-        >
-          Presence
-        </button>
-
-
       </div>
     </div>
 
-    <!-- Month @start -->
+    <!-- Month View -->
     <table
       width="100%"
       cellspacing="0"
@@ -130,12 +119,9 @@
             (cdkDropListDropped)="drop($event, date)"
             [cdkDropListData]="appointments"
             [class.today]="isToday(date)"
-            [ngStyle]="{ opacity: isCurrentMonth(date) ? '1' : '0.5' }"
           >
             <div
               (click)="selectDate(date)"
-              (keydown.enter)="selectDate(date)"
-              (keydown.space)="selectDate(date)"
               class="cell-overlay"
               tabindex="0"
             ></div>
@@ -151,17 +137,7 @@
                   cdkDrag
                   cdkDragHandle
                   [cdkDragData]="appointment"
-                  [ngStyle]="{ 'background-color': appointment.color }"
                   (click)="editAppointment(appointment, $event)"
-                  (keydown.enter)="editAppointment(appointment, $event)"
-                  (keydown.space)="editAppointment(appointment, $event)"
-                  matTooltip="
-                    Name: {{ appointment.name_and_surname }} |
-                    Age: {{ appointment.age }} | Gender: {{ appointment.gender }} |
-                    Time: {{ appointment.startTime }} - {{ appointment.endTime }} |
-                    Visit type: {{ appointment.type }} | 
-                  "
-                  matTooltipPosition="above"
                 >
                   <span>{{ appointment.name_and_surname }}</span>
                 </div>
@@ -171,7 +147,7 @@
         </tr>
       </tbody>
     </table>
-    <!-- Month @end -->
+    <!-- Month View End -->
 
     <!-- Week View -->
     <table
@@ -183,69 +159,45 @@
     >
       <thead>
         <tr>
-          <th></th>
-          <th *ngFor="let day of weekDays; index as i">
-            <div class="header-date">
-              {{ day }} {{ monthDays[i].getDate() }}
-            </div>
-            <span class="event-count">visits: {{ getEventCountForDay(monthDays[i]) }} </span>
+          <th>Godzina</th>
+          <th *ngFor="let date of monthDays">
+            {{ date.getDate() }}
           </th>
         </tr>
       </thead>
-      <tbody cdkDropListGroup>
+      <tbody>
         <tr *ngFor="let timeSlot of timeSlots">
-          <td [width]="10" 
-              class="calendar-slot-cell"
-              [class.current-time-slot]="isCurrentTimeSlot(timeSlot)"
-              >
-            <span>{{ timeSlot }}</span>
-          </td>
-          <td
-            *ngFor="let day of weekDays; index as i"
-            cdkDropList
-            (cdkDropListDropped)="drop($event, monthDays[i], timeSlot)"
-            [cdkDropListData]="appointments"
-            [class.absence-slot]="isSlotInAbsence(monthDays[i], timeSlot)"
-            [class.presence-slot]="isSlotInPresence(monthDays[i], timeSlot)"
-            [class.today-column]="isToday(monthDays[i])"
-          >
+          <td>{{ timeSlot }}</td>
+          <td *ngFor="let date of monthDays">
             <div
-              (click)="selectDate(monthDays[i], timeSlot)"
-              (keydown.enter)="selectDate(monthDays[i], timeSlot)"
-              (keydown.space)="selectDate(monthDays[i], timeSlot)"
+              (click)="selectDate(date)"
               class="cell-overlay"
               tabindex="0"
             ></div>
-            <div
-              tabindex="0"
-              *ngFor="
-                let appointment of getAppointmentsForDateTime(
-                  monthDays[i],
-                  timeSlot
-                )
-              "
-              class="appointment"
-              cdkDrag
-              cdkDragHandle
-              [cdkDragData]="appointment"
-              [ngStyle]="{ 'background-color': appointment.color }"
-              (click)="editAppointment(appointment, $event)"
-              (keydown.enter)="editAppointment(appointment, $event)"
-              (keydown.space)="editAppointment(appointment, $event)"
-              matTooltip="
-                Name: {{ appointment.name_and_surname }} |
-                Age: {{ appointment.age }} | Gender: {{ appointment.gender }} |
-                Time: {{ appointment.startTime }} - {{ appointment.endTime }} |
-                Visit type: {{ appointment.type }}
-              "
-              matTooltipPosition="above"
-            >
-              <span>{{ appointment.name_and_surname }}</span>
+            <div class="appointments">
+              <ng-container *ngFor="let appointment of appointments">
+                <div
+                  tabindex="0"
+                  *ngIf="
+                    isSameDate(appointment.date, date) &&
+                    appointment.startTime <= timeSlot &&
+                    appointment.endTime >= timeSlot
+                  "
+                  class="appointment"
+                  cdkDrag
+                  cdkDragHandle
+                  [cdkDragData]="appointment"
+                  (click)="editAppointment(appointment, $event)"
+                >
+                  <span>{{ appointment.name_and_surname }}</span>
+                </div>
+              </ng-container>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+    <!-- Week View End -->
 
     <!-- Day View -->
     <table
@@ -255,69 +207,37 @@
       class="calendar-view-day"
       *ngIf="currentView === 'day'"
     >
-
-    <thead>
-      <tr>
-        <th colspan="2" class="day-header">
-          <div>
-            <span class="event-count" style="text-align: left; font-size: 1rem; padding-bottom: 10px;">visits: {{ getEventCountForDay(monthDays[0]) }}</span>
-          </div>
-        </th>
-      </tr>
-    </thead>
-
-      <tbody cdkDropListGroup>
-        <tr *ngFor="let slot of timeSlots">
-          <td [width]="10" 
-              class="calendar-slot-cell"
-              [class.current-time-slot]="isCurrentTimeSlot(slot)"
+      <thead>
+        <tr>
+          <th>Godzina</th>
+          <th>Spotkania</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let timeSlot of timeSlots">
+          <td>{{ timeSlot }}</td>
+          <td>
+            <div class="appointments">
+              <ng-container
+                *ngFor="
+                  let appointment of getAppointmentsForDateTime(
+                    viewDate,
+                    timeSlot
+                  )
+                "
               >
-            <span>{{ slot }}</span>
-          </td>
-          <td
-            cdkDropList
-            (cdkDropListDropped)="drop($event, monthDays[0], slot)"
-            [cdkDropListData]="appointments"
-            [class.absence-slot]="isSlotInAbsence(monthDays[0], slot)"
-          >
-            <div
-              (click)="selectDate(monthDays[0], slot)"
-              (keydown.enter)="selectDate(monthDays[0], slot)"
-              (keydown.space)="selectDate(monthDays[0], slot)"
-              class="cell-overlay"
-              tabindex="0"
-            ></div>
-            <div
-              tabindex="0"
-              *ngFor="
-                let appointment of getAppointmentsForDateTime(
-                  monthDays[0],
-                  slot
-                )
-              "
-              class="appointment"
-              cdkDrag
-              cdkDragHandle
-              [cdkDragData]="appointment"
-              [ngStyle]="{ 'background-color': appointment.color }"
-              (click)="editAppointment(appointment, $event)"
-              (keydown.enter)="editAppointment(appointment, $event)"
-              (keydown.space)="editAppointment(appointment, $event)"
-              matTooltip="
-                Name: {{ appointment.name_and_surname }} |
-                Age: {{ appointment.age }} | Gender: {{ appointment.gender }} |
-                Time: {{ appointment.startTime }} - {{ appointment.endTime }} |
-                Visit type: {{ appointment.type }}
-              "
-              matTooltipPosition="above"
-              >
-              <span>{{ appointment.name_and_surname }}</span>
+                <div
+                  class="appointment"
+                  (click)="editAppointment(appointment, $event)"
+                >
+                  <span>{{ appointment.name_and_surname }}</span>
+                </div>
+              </ng-container>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
-
-    
+    <!-- Day View End -->
   </div>
 </div>

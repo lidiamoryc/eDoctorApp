@@ -15,15 +15,15 @@
             placeholder="Enter your email"
           />
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')"
-            >Email is required</mat-error
+            >Email jest wymagany</mat-error
           >
           <mat-error *ngIf="loginForm.get('email')?.hasError('email')"
-            >Please enter a valid email</mat-error
+            >Wprowadz poprawny email</mat-error
           >
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
+          <mat-label>Haslo</mat-label>
           <input
             matInput
             type="password"
@@ -31,7 +31,7 @@
             placeholder="Enter your password"
           />
           <mat-error *ngIf="loginForm.get('password')?.hasError('required')"
-            >Password is required</mat-error
+            >Haslo jest wymagane</mat-error
           >
         </mat-form-field>
 
@@ -49,7 +49,7 @@
         </button>
 
         <div class="register-link">
-          Don't have an account? <a routerLink="/register">Register here</a>
+          Nie masz konta? <a routerLink="/register">Zarejestruj sie</a>
         </div>
       </form>
     </mat-card-content>

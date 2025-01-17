@@ -16,13 +16,12 @@ import { AppComponent } from '../app.component';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { PresenceComponent } from '../presence/presence.component'
 
 
 
 // firebase
 import { AngularFireModule } from "@angular/fire/compat";
-import { environment } from '../../environments/environment';
+import { environment } from '../../environments/environment.firebase';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 const routes: Routes = [{ path: '', component: CalendarComponent }];
@@ -41,8 +40,7 @@ const routes: Routes = [{ path: '', component: CalendarComponent }];
     AbsenceComponent,
     MatOptionModule, // Import MatOptionModule
     MatSelectModule, // Import MatSelectModule
-    MatTooltipModule,
-    PresenceComponent
+    MatTooltipModule
   ],
 })
 export class CalendarModule { }

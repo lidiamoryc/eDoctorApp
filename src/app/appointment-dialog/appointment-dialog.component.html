@@ -1,42 +1,51 @@
 <div class="dialog-content">
-  <h5 mat-dialog-title *ngIf="!data.id">Add Appointment</h5>
-  <h5 mat-dialog-title *ngIf="data.id">Edit Appointment</h5>
+  <h5 mat-dialog-title *ngIf="!data.id">Dodaj Spotkanie</h5>
+  <h5 mat-dialog-title *ngIf="data.id">Edytuj Spotkanie</h5>
   <div [formGroup]="appointmentForm">
     <div mat-dialog-content>
       <!-- Name and Surname -->
       <mat-form-field class="form-field">
-        <mat-label>Name and Surname</mat-label>
-        <input formControlName="name_and_surname" matInput placeholder="Full name and surname" />
+        <mat-label>Imię i Nazwisko</mat-label>
+        <input
+          formControlName="name_and_surname"
+          matInput
+          placeholder="Imię i nazwisko"
+        />
       </mat-form-field>
 
       <!-- Type -->
       <mat-form-field class="form-field">
-        <mat-label>Visit type</mat-label>
+        <mat-label>Typ wizyty</mat-label>
         <mat-select formControlName="type">
-          <mat-option value="first consultation">First Visit</mat-option>
-          <mat-option value="prescription">Prescription</mat-option>
-          <mat-option value="control visit">Control Visit</mat-option>
+          <mat-option value="first consultation">Pierwsza wizyta</mat-option>
+          <mat-option value="prescription">Recepta</mat-option>
+          <mat-option value="control visit">Kontrolna wizyta</mat-option>
         </mat-select>
       </mat-form-field>
 
       <!-- Gender -->
       <mat-form-field class="form-field">
-        <mat-label>Gender</mat-label>
+        <mat-label>Płeć</mat-label>
         <mat-select formControlName="gender">
-          <mat-option value="male">Male</mat-option>
-          <mat-option value="female">Female</mat-option>
+          <mat-option value="male">Mężczyzna</mat-option>
+          <mat-option value="female">Kobieta</mat-option>
         </mat-select>
       </mat-form-field>
 
       <!-- Age -->
       <mat-form-field class="form-field">
-        <mat-label>Age</mat-label>
-        <input formControlName="age" matInput type="number" placeholder="Enter age" />
+        <mat-label>Wiek</mat-label>
+        <input
+          formControlName="age"
+          matInput
+          type="number"
+          placeholder="Wprowadź wiek"
+        />
       </mat-form-field>
 
       <!-- Date -->
       <mat-form-field class="form-field">
-        <mat-label>Date</mat-label>
+        <mat-label>Data</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
@@ -44,7 +53,7 @@
 
       <!-- Start Time -->
       <mat-form-field class="form-field">
-        <mat-label>Start Time</mat-label>
+        <mat-label>Godzina rozpoczęcia</mat-label>
         <mat-select formControlName="startTime">
           <mat-option *ngFor="let time of fullHourOptions" [value]="time">
             {{ time }}
@@ -54,7 +63,7 @@
 
       <!-- End Time -->
       <mat-form-field class="form-field">
-        <mat-label>End Time</mat-label>
+        <mat-label>Godzina zakończenia</mat-label>
         <mat-select formControlName="endTime">
           <mat-option *ngFor="let time of fullHourOptions" [value]="time">
             {{ time }}
@@ -64,30 +73,41 @@
 
       <!-- Validation Error for Time Range -->
       <div
-        *ngIf="appointmentForm.errors && appointmentForm.errors['timeRangeInvalid']"
+        *ngIf="
+          appointmentForm.errors && appointmentForm.errors['timeRangeInvalid']
+        "
         class="error"
       >
-        End time must be after start time.
+        Godzina zakończenia musi być późniejsza niż godzina rozpoczęcia.
       </div>
 
       <!-- Validation Error for Overlapping Absences -->
       <div
-        *ngIf="appointmentForm.errors && appointmentForm.errors['overlappingAbsence']"
+        *ngIf="
+          appointmentForm.errors && appointmentForm.errors['overlappingAbsence']
+        "
         class="error"
       >
-        The selected time overlaps with an absence. Please choose a different time.
+        Wybrany czas nachodzi na nieobecność. Proszę wybrać inny czas.
       </div>
 
-      
       <!-- Event overlapping error -->
-      <div *ngIf="appointmentForm.errors?.['overlappingEvent']" class="error-message">
-        The selected time slot overlaps with an existing event. Please choose a different time.
+      <div
+        *ngIf="appointmentForm.errors?.['overlappingEvent']"
+        class="error-message"
+      >
+        Wybrany przedział czasowy nachodzi na istniejące wydarzenie. Proszę
+        wybrać inny czas.
       </div>
 
       <!-- Additional Info -->
       <mat-form-field class="form-field">
-        <mat-label>Additional Information</mat-label>
-        <textarea formControlName="additional_info" matInput placeholder="Enter additional details (optional)"></textarea>
+        <mat-label>Dodatkowe informacje</mat-label>
+        <textarea
+          formControlName="additional_info"
+          matInput
+          placeholder="Wprowadź dodatkowe informacje (opcjonalne)"
+        ></textarea>
       </mat-form-field>
     </div>
 
@@ -101,7 +121,7 @@
         (click)="onEditClick()"
         [disabled]="appointmentForm.invalid"
       >
-        Edit Appointment
+        Edytuj Spotkanie
       </button>
 
       <!-- Add Button -->
@@ -113,7 +133,7 @@
         (click)="onSaveClick()"
         [disabled]="appointmentForm.invalid"
       >
-        Add Appointment
+        Dodaj Spotkanie
       </button>
 
       <!-- Delete Button -->
@@ -124,7 +144,7 @@
         (click)="onDeleteClick()"
         style="margin-left: 10px"
       >
-        Delete
+        Usuń
       </button>
 
       <!-- Cancel Button -->
@@ -133,7 +153,7 @@
         (click)="onNoClick()"
         style="margin-left: 10px"
       >
-        Cancel
+        Anuluj
       </button>
     </div>
   </div>

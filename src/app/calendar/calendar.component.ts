@@ -3,10 +3,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
 import { BasketComponent } from '../basket/basket.component'
-import { AppointmentService, Appointment, Absence, Presence} from '../appointment.service'; 
+import { AppointmentService, Appointment, Absence } from '../appointment.service';
 import { AbsenceComponent } from '../absence/absence.component';
 import { AuthService, User } from '../auth/auth.service';
-import { PresenceComponent } from '../presence/presence.component';
 
 
 export enum CalendarView {
@@ -33,7 +32,6 @@ export class CalendarComponent implements OnInit {
   now: Date = new Date();
   weeks: Date[][] = [];
   absences: Absence[] = [];
-  presences: Presence[] = [];
 
   public CalendarView = CalendarView;
 
@@ -48,7 +46,6 @@ export class CalendarComponent implements OnInit {
   ngOnInit(): void {
     this.fetchAppointments();
     this.fetchAbsences();  // Fetch appointments on component initialization
-    this.fetchPresences();
 
     this.authService.getCurrentUser().subscribe((user) => {
       this.currentUser = user;
@@ -74,18 +71,6 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  fetchPresences(): void {
-    this.appointmentService.getPresences().subscribe({
-      next: (presences) => {
-        this.presences = presences;
-        console.log('Fetched presences:', this.presences);
-      },
-      error: (err) => {
-        console.error('Error fetching presences:', err);
-      },
-    });
-  }
-
   fetchAppointments(): void {
     this.appointmentService.getAppointments().subscribe({
       next: (appointments) => {
@@ -104,7 +89,7 @@ export class CalendarComponent implements OnInit {
       },
     });
   }
-  
+
   //////////////////////////////////////////////////////////////// fetching
 
   isPastDate(date: string | Date): boolean {
@@ -193,7 +178,7 @@ export class CalendarComponent implements OnInit {
 
   generateTimeSlots() {
     this.timeSlots = [];
-  
+
     for (let hour = 9; hour <= 16; hour++) {
       for (let min = 0; min < 60; min += 30) {
         if (hour === 16 && min === 30) {
@@ -206,7 +191,7 @@ export class CalendarComponent implements OnInit {
       }
     }
   }
-  
+
 
   switchToView(view: CalendarView) {
     this.currentView = view;
@@ -271,9 +256,9 @@ export class CalendarComponent implements OnInit {
     const now = new Date();
     const currentHour = now.getHours();
     const currentMinutes = now.getMinutes();
-  
+
     const [slotHour, slotMinutes] = timeSlot.split(':').map(Number);
-  
+
     // Check if the slot matches the current hour and minute range
     return slotHour === currentHour && currentMinutes >= slotMinutes && currentMinutes < slotMinutes + 30;
   }
@@ -296,28 +281,6 @@ export class CalendarComponent implements OnInit {
       return slotDate >= absenceStart && slotDate < absenceEnd;
     });
   }
-
-  isSlotInPresence(date: Date, timeSlot: string): boolean {
-    return this.presences.some((presence) => {
-      const [startHours, startMinutes] = presence.startTime.split(':').map(Number);
-      const [endHours, endMinutes] = presence.endTime.split(':').map(Number);
-  
-      const presenceStart = new Date(presence.date);
-      presenceStart.setHours(startHours, startMinutes);
-  
-      const presenceEnd = new Date(presence.date);
-      presenceEnd.setHours(endHours, endMinutes);
-  
-      const slotDate = new Date(date);
-      const [slotHours, slotMinutes] = timeSlot.split(':').map(Number);
-      slotDate.setHours(slotHours, slotMinutes);
-  
-      return slotDate >= presenceStart && slotDate < presenceEnd;
-    });
-  }
-  
-
-  
 
   isSelected(date: Date): boolean {
     if (!this.selectedDate) {
@@ -353,15 +316,15 @@ export class CalendarComponent implements OnInit {
 
 
 
-  addAppointment(date: string, 
-                name_and_surname: string, 
-                type: string, 
-                age: number, 
-                gender: string, 
-                startTime: string, 
-                endTime: string, 
-                additional_info: string,
-                color: string,): void {
+  addAppointment(date: string,
+    name_and_surname: string,
+    type: string,
+    age: number,
+    gender: string,
+    startTime: string,
+    endTime: string,
+    additional_info: string,
+    color: string,): void {
     const newAppointment: Appointment = {
       date,
       name_and_surname,
@@ -376,7 +339,7 @@ export class CalendarComponent implements OnInit {
 
     this.appointmentService.addAppointment(newAppointment).subscribe({
       next: () => {
-        this.fetchAppointments(); 
+        this.fetchAppointments();
       },
       error: (err) => {
         console.error('Error adding appointment:', err);
@@ -427,8 +390,8 @@ export class CalendarComponent implements OnInit {
 
   openBasket(): void {
     const dialogRef = this.dialog.open(BasketComponent, {
-      width: '500px', 
-      panelClass: 'dialog-container', 
+      width: '500px',
+      panelClass: 'dialog-container',
 
     });
 
@@ -445,7 +408,7 @@ export class CalendarComponent implements OnInit {
       width: '500px',
       panelClass: 'dialog-container',
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         console.log('Absence data:', result); // Log the absence data
@@ -459,12 +422,12 @@ export class CalendarComponent implements OnInit {
           endTime: result.endTime, // Use the end time from the form
           additional_info: result.additional_info,
         };
-  
+
         // Send the absence to the backend
         this.appointmentService.addAbsence(formattedAbsence).subscribe({
           next: (response) => {
             console.log('Absence added successfully:', response);
-  
+
             // Refresh the absences list
             this.fetchAbsences(); // Re-fetch absences from the backend
           },
@@ -477,44 +440,7 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  addPresence(): void {
-    const dialogRef = this.dialog.open(PresenceComponent, {
-      width: '500px',
-      panelClass: 'dialog-container',
-    });
-  
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        console.log('Presence data:', result); // Log the absence data
-        const formattedPresence = {
-          date: result.date, // Use the selected date from the form
-          name_and_surname: result.name_and_surname,
-          type: result.type,
-          age: result.age,
-          gender: result.gender,
-          startTime: result.startTime, // Use the start time from the form
-          endTime: result.endTime, // Use the end time from the form
-          additional_info: result.additional_info,
-        };
-  
-        // Send the absence to the backend
-        this.appointmentService.addPresence(formattedPresence).subscribe({
-          next: (response) => {
-            console.log('Presence added successfully:', response);
-  
-            // Refresh the absences list
-            this.fetchPresences(); // Re-fetch absences from the backend
-          },
-          error: (err) => {
-            console.error('Error adding absence:', err);
-          },
-        });
-      }
-    });
-  }
 
-
- 
   getAppointmentsForDate(day: Date, timeSlots: string[]) {
     return this.appointments
       .filter((appointment) => {
@@ -543,7 +469,7 @@ export class CalendarComponent implements OnInit {
 
   viewToday(): void {
     this.viewDate = new Date();
-  
+
     if (this.currentView === 'month') {
       this.generateMonthView(this.viewDate);
     } else if (this.currentView === 'week') {
@@ -582,17 +508,17 @@ export class CalendarComponent implements OnInit {
 
   editAppointment(appointment: Appointment, event: Event) {
     event.preventDefault();
-  
+
     const dialogRef = this.dialog.open(AppointmentDialogComponent, {
       width: '500px',
       panelClass: 'dialog-container',
       data: {
-        ...appointment, 
+        ...appointment,
         absences: this.absences,
         appointments: this.appointments
       },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const index = this.appointments.findIndex(
@@ -606,8 +532,8 @@ export class CalendarComponent implements OnInit {
       }
     });
   }
-  
-  
-  
+
+
+
 
 }  

@@ -1,26 +1,23 @@
 <div class="dialog-content">
-  <h5 mat-dialog-title>Add Absence</h5>
+  <h2 mat-dialog-title>Nieobecności</h2>
   <div [formGroup]="absenceForm">
     <div mat-dialog-content>
       <mat-form-field class="form-field">
-        <mat-label>Date</mat-label>
+        <mat-label>Data Rozpoczęcia</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="form-field">
-        <mat-label>Start Time</mat-label>
+        <mat-label>Czas Rozpoczęcia</mat-label>
         <input matInput formControlName="startTime" type="time" />
       </mat-form-field>
       <mat-form-field class="form-field">
-        <mat-label>End Time</mat-label>
+        <mat-label>Czas Zakończenia</mat-label>
         <input matInput formControlName="endTime" type="time" />
       </mat-form-field>
-      <div
-        *ngIf="absenceForm.errors?.['timeRangeInvalid']"
-        class="error"
-      >
-        End time must be after start time.
+      <div *ngIf="absenceForm.errors?.['timeRangeInvalid']" class="error">
+        Czas zakończenia musi być po czasie rozpoczęcia.
       </div>
     </div>
     <div mat-dialog-actions align="end">
@@ -30,14 +27,14 @@
         (click)="onSaveClick()"
         [disabled]="absenceForm.invalid"
       >
-        Save
+        Zgłoś Nieobecność
       </button>
       <button
         mat-stroked-button
         (click)="onCancelClick()"
         style="margin-left: 10px"
       >
-        Cancel
+        Anuluj
       </button>
     </div>
   </div>
